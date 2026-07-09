@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ComercioTech - Productos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">PT</div>
+        <div>
+          <h1>ComercioTech</h1>
+          <div class="subtitle">Administra productos de forma simple</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card product-card">
+      <h3 id="product-form-title">Crear producto</h3>
+      <form id="formProducto">
+        <div class="form-row">
+          <label>Nombre del producto</label>
+          <input id="producto-nombre" name="producto-nombre" type="text" placeholder="Ej: Laptop Pro" required>
+        </div>
+        <div class="form-row">
+          <label>Categoría</label>
+          <input id="producto-categoria" name="producto-categoria" type="text" placeholder="Ej: Electrónica" required>
+        </div>
+        <div class="form-row">
+          <label>Precio</label>
+          <input id="producto-precio" name="producto-precio" type="number" min="0" step="0.01" placeholder="0.00" required>
+        </div>
+        <div class="form-row">
+          <label>Stock</label>
+          <input id="producto-stock" name="producto-stock" type="number" min="0" step="1" placeholder="10" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Guardar producto</button>
+          <button type="button" class="secondary" onclick="document.getElementById('formProducto').reset()">Limpiar</button>
+          <div id="product-msg" class="msg"></div>
+        </div>
+      </form>
+      <div id="product-list" class="products-list"></div>
+    </div>
+  </div>
+  <script src="/components/volverInicio.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

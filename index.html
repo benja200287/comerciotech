@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ComercioTech - Inicio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <div class="logo" style="width:40px;height:40px;font-size:14px">CT</div>
+        <div style="margin-left:10px;line-height:1">
+          <div style="font-weight:700">ComercioTech</div>
+          <div style="font-size:12px;color:var(--muted)">Ofrecido por ComercioTech S.A.</div>
+        </div>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#home">Inicio</a></li>
+          <li class="nav-item" id="nav-clientes"><a class="nav-link" href="#clientes">Clientes</a></li>
+          <li class="nav-item" id="nav-productos"><a class="nav-link" href="#productos">Productos</a></li>
+          <li class="nav-item" id="nav-pedidos"><a class="nav-link" href="#pedidos">Pedidos</a></li>
+        </ul>
+        <div id="auth-area" class="auth-area"></div>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container py-5">
+    <section class="hero mb-5">
+      <div class="hero-copy">
+        <h1>ComercioTech</h1>
+        <p class="hero-text">ComercioTech es una aplicación web diseñada para facilitar la gestión de pedidos y compras en línea. Su objetivo es ofrecer a los clientes una experiencia de compra sencilla, rápida y organizada, permitiendo seleccionar productos, revisar el carrito y confirmar pedidos directamente desde la interfaz.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#productos">Ver productos</a>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="administradores" class="mb-5" style="display:none;">
+      <div class="list-header">
+        <h4>Administradores</h4>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm" id="admin-clients-table">
+          <thead>
+            <tr><th>Nombre</th><th>Email</th><th>Dirección</th><th>Teléfono</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="clientes" class="mb-5">
+      <div class="list-header">
+        <h4>Clientes</h4>
+        <div class="search">
+          <input id="search-clientes" type="search" class="form-control form-control-sm" placeholder="Buscar clientes...">
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm" id="clients-table">
+          <thead>
+            <tr><th>Nombre</th><th>Email</th><th>Dirección</th><th>Teléfono</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="productos" class="mb-5">
+      <div class="list-header">
+        <h4>Productos</h4>
+        <div class="search">
+          <input id="search-productos" type="search" class="form-control form-control-sm" placeholder="Buscar productos...">
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm" id="products-table">
+          <thead>
+            <tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="products-cards" class="products-cards" style="display:none;margin-top:8px;"></div>
+      </div>
+    </section>
+
+    <section id="pedidos" class="mb-5" style="display:none;">
+      <div class="list-header">
+        <h4>Pedidos</h4>
+        <div>
+          <button id="pedidos-back-home" class="btn page-link back-home-btn">Volver al inicio</button>
+        </div>
+      </div>
+      <div class="pedidos-search search" style="margin-bottom:12px;">
+        <input id="search-pedidos" type="search" class="form-control form-control-sm" placeholder="Buscar pedidos por cliente, estado o dirección...">
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm" id="pedidos-table">
+          <thead id="pedidos-thead">
+            <!-- Thead is rendered dynamically in app.js depending on admin status -->
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Iniciar sesión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="mb-2"><label class="form-label">Email o usuario</label><input id="login-identifier" type="text" class="form-control" required></div>
+            <div class="mb-2"><label class="form-label">Contraseña</label><input id="login-password" type="password" class="form-control" required></div>
+            <div id="login-msg" class="text-danger small"></div>
+            <div class="mt-3 text-end"><button class="btn btn-primary" type="submit">Entrar</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Registrarse</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="register-form">
+            <div class="mb-2"><label class="form-label">Nombre</label><input id="reg-nombre" type="text" class="form-control" required></div>
+            <div class="mb-2"><label class="form-label">Usuario</label><input id="reg-username" type="text" class="form-control" required></div>
+            <div class="mb-2"><label class="form-label">Email</label><input id="reg-email" type="email" class="form-control" required></div>
+            <div class="mb-2"><label class="form-label">Contraseña</label><input id="reg-password" type="password" class="form-control" required></div>
+            <div id="register-msg" class="text-danger small"></div>
+            <div class="mt-3 text-end"><button class="btn btn-primary" type="submit">Crear cuenta</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Product Confirmation Modal -->
+  <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Eliminar producto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que quieres eliminar este producto?</p>
+          <p class="fw-bold" id="delete-product-name">Nombre del producto</p>
+          <p class="text-danger small">Esta acción no se puede deshacer.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirm-delete-product-btn">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Order Confirmation Modal -->
+  <div class="modal fade" id="deleteOrderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Eliminar pedido</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que quieres eliminar este pedido?</p>
+          <p class="fw-bold" id="delete-order-name">Pedido</p>
+          <p class="text-danger small">Esta acción no se puede deshacer.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirm-delete-order-btn">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Order Details Modal -->
+  
+
+  <!-- Edit Order Status Modal -->
+  <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editOrderModalLabel">Editar estado del pedido</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="edit-order-id">
+          <div class="mb-3">
+            <label class="form-label">Pedido de</label>
+            <p id="edit-order-client" class="fw-bold"></p>
+          </div>
+          <div class="mb-3">
+            <label for="edit-order-status" class="form-label">Estado</label>
+            <select class="form-select" id="edit-order-status">
+              <option value="pendiente">Pendiente</option>
+              <option value="pagado">Pagado</option>
+              <option value="enviado">Enviado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="edit-order-address" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="edit-order-address">
+          </div>
+          <div id="edit-order-msg" class="text-danger small"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="confirm-edit-order-status-btn">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- Edit Product Modal -->
+      <div class="modal fade" id="editStockModal" tabindex="-1" aria-labelledby="editStockModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editStockModalLabel">Editar producto</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <p>Actualiza los datos de <strong id="edit-stock-product-name">este producto</strong>.</p>
+              <div class="mb-3">
+                <label for="edit-product-name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="edit-product-name">
+              </div>
+              <div class="mb-3">
+                <label for="edit-product-category" class="form-label">Categoría</label>
+                <select class="form-select" id="edit-product-category" required>
+                  <option value="" disabled selected>Seleccione una categoría</option>
+                  <option value="Computadoras">Computadoras</option>
+                  <option value="Celulares">Celulares</option>
+                  <option value="Audifonos">Audifonos</option>
+                  <option value="Mouse">Mouse</option>
+                  <option value="Teclados">Teclados</option>
+                  <option value="Memorias">Memorias</option>
+                  <option value="Impresoras">Impresoras</option>
+                  <option value="Camaras">Camaras</option>
+                  <option value="Drones">Drones</option>
+                  <option value="Microfonos">Microfonos</option>
+                  <option value="Parlantes">Parlantes</option>
+                  <option value="Cables">Cables</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="edit-product-price" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="edit-product-price" min="0" step="0.01">
+              </div>
+              <div class="mb-3">
+                <label for="edit-product-stock" class="form-label">Stock</label>
+                <input type="number" class="form-control" id="edit-product-stock" min="0" step="1">
+              </div>
+              <div id="edit-stock-msg" class="form-text text-danger"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="confirm-stock-save-btn">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <!-- Cart Drawer (fixed right) -->
+  <div id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <h5>Carrito</h5>
+      <button type="button" id="cart-close" class="btn btn-sm btn-outline-secondary">✕</button>
+    </div>
+    <div class="cart-drawer-body">
+      <div id="cart-contents">
+        <div class="empty">No hay productos en el carrito</div>
+      </div>
+    </div>
+    <div class="cart-drawer-footer">
+      <div id="cart-total" class="drawer-total"></div>
+      <div class="drawer-actions">
+        <button type="button" id="cart-back-home" class="btn outline">Volver al inicio</button>
+        <button type="button" id="cart-order" class="btn btn-primary">Hacer pedido</button>
+        <button type="button" id="cart-clear" class="btn btn-danger">Vaciar carrito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Cliente Modal -->
+  <div class="modal fade" id="editClienteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Mi perfil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-cliente-form">
+            <input type="hidden" id="edit-cliente-id">
+            <div class="mb-2"><label class="form-label">Nombre</label><input id="edit-nombre" type="text" class="form-control"></div>
+            <div class="mb-2"><label class="form-label">Username</label><input id="edit-username" type="text" class="form-control"></div>
+            <div class="mb-2"><label class="form-label">Email</label><input id="edit-email" type="email" class="form-control"></div>
+            <div class="mb-2"><label class="form-label">Teléfono</label><input id="edit-telefono" type="text" class="form-control"></div>
+            <div class="mb-2"><label class="form-label">Dirección</label><input id="edit-direccion" type="text" class="form-control"></div>
+            <div id="edit-cliente-msg" class="text-danger small"></div>
+            <div class="mt-3 text-end"><button class="btn btn-primary" type="submit">Guardar cambios</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="/app.js"></script>
+  <footer class="site-footer">
+    <div class="container text-center py-3">
+      <small>ComercioTech</small>
+    </div>
+  </footer>
+  </body>
+  </html>

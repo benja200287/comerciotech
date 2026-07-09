@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ComercioTech - Pedidos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">PD</div>
+        <div>
+          <h1>ComercioTech</h1>
+          <div class="subtitle">Gestiona pedidos fácilmente</div>
+        </div>
+      </div>
+      <div class="chip">API /pedidos</div>
+    </div>
+
+    <div class="card order-card">
+      <h3>Crear pedido</h3>
+      <form id="formPedidos">
+        <div id="cliente-select-row" class="form-row">
+          <select id="pedido-cliente" aria-label="Cliente"></select>
+        </div>
+        <div id="cliente-info-row" class="form-row client-display" style="display:none;">
+          <strong>Cliente</strong>
+          <div class="client-name" id="cliente-nombre"></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:6px;">
+            <div id="cliente-email"></div>
+            <div id="cliente-telefono"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Dirección de envío</label>
+          <input id="pedido-direccion" name="pedido-direccion" type="text" placeholder="Ej: Calle Falsa 123" required>
+        </div>
+        <div class="form-row">
+          <label>Carrito</label>
+          <div id="pedido-cart" class="order-cart"></div>
+          <div id="pedido-total" class="order-total"></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Enviar pedido</button>
+          <button type="button" class="secondary" id="clear-cart">Limpiar carrito</button>
+          <div id="pedido-msg" class="msg"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/components/volverInicio.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
